@@ -13,13 +13,13 @@ The contacts data is received in two-dimensional array
 1. Need to be able to save Groups that have the following contacts information
 2. Show the database results in multiple tableViews
 
-Group 1:
-[[James, 01012345678], [Lawson, 01024681012], [Coe, 01036912151], [Josh, 01048121416], [Chambers, 01051015202], [Ciaran, 01061218202]]
-
-Group 2:
-[[Jihwan, 01112345678], [John, 01124681012], [Chris, 01136912151], [Jo, 01148121416], [Max, 01151015202], [Jason, 01161218202]]
+group1: [["James", "01012345678"], ["Lawson", "01024681012"], ["Coe", "01036912151"],
+["Josh", "01048121416"], ["Chambers", "01051015202"], ["Ciaran", "01061218202"]]
  
- ... and more groups
+group2: [["Jihwan", "01112345678"], ["John", "01124681012"], ["Chris", "01136912151"],
+["Jo", "01148121416"], ["Kevin", "01151015202"], ["Kelly", "01161218202"]]
+ 
+ 
 */
 
 
@@ -27,56 +27,64 @@ Group 2:
 import UIKit
 import RealmSwift
 
-class ViewController: UIViewController {
+class MainVC: UIViewController {
     
     var recruitGroups : Results<RecruitGroup>?
-    var people: Results<Person>?
-    
     let realm = try! Realm()
    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
+        load()
     }
 
     
     @IBAction func addButtonPressed(_ sender: UIButton) {
         let firstRecruitGroup = RecruitGroup()
         firstRecruitGroup.title = "Australian Friends"
-        importAndSaveData(contactDataArray: Data.group1, recruitGroup: firstRecruitGroup)
+        importAndSaveData(contactDataArray: Data.group1, newRecruitGroup: firstRecruitGroup)
         
         
         let secondRecruitGroup = RecruitGroup()
         secondRecruitGroup.title = "Korean Friends"
-        importAndSaveData(contactDataArray: Data.group2, recruitGroup: secondRecruitGroup)
+        importAndSaveData(contactDataArray: Data.group2, newRecruitGroup: secondRecruitGroup)
     }
 }
 
 
-extension ViewController {
+extension MainVC {
     
+    func load() {
+        recruitGroups = realm.objects(RecruitGroup.self)
+    }
     
-    func importAndSaveData(contactDataArray: [[Any]], recruitGroup: RecruitGroup) {
-        
-        
-        
+    func importAndSaveData(contactDataArray: [[Any]], newRecruitGroup: RecruitGroup) {
         do {
             try realm.write {
+                
                 for i in 0..<contactDataArray.count {
                     let newPerson = Person()
                     let personalInfo = contactDataArray[i]
                     newPerson.name = personalInfo[0] as? String ?? "No Value"
                     newPerson.phoneNumber = personalInfo[1] as? String ?? "No Value"
-                    print(newPerson.name, newPerson.phoneNumber)
-                    
-                    recruitGroup.people.append(newPerson)
-                    
+                    newRecruitGroup.people.append(newPerson)
                 }
                 
                 
-                print(recruitGroup)
-                realm.add(recruitGroup)
+                for i in 0..<recruitGroups!.count{
+                    if recruitGroups![i].title == newRecruitGroup.title {
+                        //same title exists, abandon
+                        print("The same form exists")
+                        return
+                    }
+                }
+                
+                
+                realm.add(newRecruitGroup)
+                print("Added :: -----------------")
+                print(newRecruitGroup)
+                print("--------------------------")
+                
             }
             
         } catch {

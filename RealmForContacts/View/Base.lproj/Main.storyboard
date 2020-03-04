@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--MainVC-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="RealmForContacts" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MainVC" customModule="RealmForContacts" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -22,10 +22,21 @@
                                     <action selector="addButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vIE-Ko-tRm"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="coD-r2-AHk">
+                                <rect key="frame" x="143" y="772" width="128" height="30"/>
+                                <state key="normal" title="Move to TableView"/>
+                                <connections>
+                                    <segue destination="HDP-o8-h8s" kind="popoverPresentation" popoverAnchorView="coD-r2-AHk" id="blu-Z9-f1a">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="LSv-lN-Pww" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="7wY-GF-Jqn"/>
+                            <constraint firstItem="coD-r2-AHk" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="i5H-Ua-1ik"/>
+                            <constraint firstItem="coD-r2-AHk" firstAttribute="top" secondItem="LSv-lN-Pww" secondAttribute="bottom" constant="30" id="vsX-37-UAX"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="LSv-lN-Pww" secondAttribute="bottom" constant="120" id="xoQ-4m-jhm"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -34,6 +45,48 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="133" y="139"/>
+        </scene>
+        <!--Show DataVC-->
+        <scene sceneID="YFm-qM-HNu">
+            <objects>
+                <viewController id="HDP-o8-h8s" customClass="ShowDataVC" customModule="RealmForContacts" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="woE-MN-xRn">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Added Contacts" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gKl-aE-FvH">
+                                <rect key="frame" x="93.5" y="20" width="227" height="47"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="47" id="VCg-gn-L2l"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="jLz-pA-yfQ">
+                                <rect key="frame" x="20" y="86" width="374" height="692"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="jLz-pA-yfQ" firstAttribute="top" secondItem="gKl-aE-FvH" secondAttribute="bottom" constant="19" id="CLr-76-fbQ"/>
+                            <constraint firstItem="bmW-LZ-hnR" firstAttribute="trailing" secondItem="jLz-pA-yfQ" secondAttribute="trailing" constant="20" id="ZYc-EG-d94"/>
+                            <constraint firstItem="bmW-LZ-hnR" firstAttribute="bottom" secondItem="jLz-pA-yfQ" secondAttribute="bottom" constant="30" id="Zxg-0i-wrc"/>
+                            <constraint firstItem="jLz-pA-yfQ" firstAttribute="leading" secondItem="bmW-LZ-hnR" secondAttribute="leading" constant="20" id="ohr-T3-jLW"/>
+                            <constraint firstItem="gKl-aE-FvH" firstAttribute="centerX" secondItem="woE-MN-xRn" secondAttribute="centerX" id="oq9-G6-zmu"/>
+                            <constraint firstItem="gKl-aE-FvH" firstAttribute="top" secondItem="woE-MN-xRn" secondAttribute="top" constant="20" symbolic="YES" id="zha-s5-2mL"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="bmW-LZ-hnR"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Yw6-d4-khr"/>
+                    <connections>
+                        <outlet property="contactsTV" destination="jLz-pA-yfQ" id="nnI-Hq-HUi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="v55-u0-HPV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1071.0144927536232" y="138.61607142857142"/>
         </scene>
     </scenes>
 </document>
